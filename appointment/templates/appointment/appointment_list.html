@@ -1,0 +1,52 @@
+{% extends 'dentistry/base.html' %}
+{% load static %}
+{% block content %}
+<!-- Service Start -->
+<div class="container-fluid service bg-light overflow-hidden py-5" xmlns="http://www.w3.org/1999/html">
+
+    <h1 class="display-3 text-capitalize mb-3">Записи на прием к врачу {{ doctor.doctors_name }} на {{ date }}</h1>
+    <form action="{% url 'appointment:appointment_list' doctor.id %}" method="get" class="date-form">
+        <label for="date">Выберите дату:</label>
+        <input type="date" name="date" value="{{ date }}" required>
+        <button type="submit">Показать записи</button>
+    </form>
+</div>
+
+<div class="row gx-0 gy-4 align-items-center">
+    <div class="col-lg-6 col-xl-4 wow fadeInLeft" data-wow-delay="0.2s">
+
+        <div class="row">
+            <div class="col-12">
+                <div class="d-flex">
+                    <div class="service-content text-end">
+                        <a class="h4 d-inline-block mb-3">{{ doctor.doctors_name}}</a>
+                    </div>
+                    <div class="ps-4 mb-4">
+                        <img width="200" src="/media/{{ doctor.photo }}">
+                    </div>
+                </div>
+
+                <a href="{% url 'dentistry:doctors_list' doctor.specialization_id %}" class="btn btn-primary rounded-pill d-inline-flex flex-shrink-0 py-2 px-4 mb-4">Вернуться к
+                    списку врачей</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+</div>
+</div>
+{% for appointment in appointments %}
+<div class="card mb-4 box-shadow">
+    <div class="card-header">
+        <h4 class="my-0 font-weight-normal">{{ appointment.name }}</h4>
+        <h5 class="my-0 font-weight-normal">{{ appointment.phone }}</h5>
+        <h5 class="my-0 font-weight-normal">{{ appointment.time }}</h5>
+    </div>
+</div>
+{% endfor %}
+</div>
+</div>
+<!-- Service End -->
+{% endblock %}
