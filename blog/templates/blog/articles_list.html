@@ -1,4 +1,5 @@
 {% extends 'dentistry/base.html' %}
+{% load tags %}
 {% load static %}
 {% block content %}
 
@@ -7,7 +8,7 @@
 <div class="container-fluid blog py-5">
     <div class="container py-5">
         <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
-            {% if user.is_authenticated %}
+            {% if user|has_group:'Moderator' %}
             <a href="{% url 'blog:blog_create' %}"
                class="btn btn-primary rounded-pill d-inline-flex flex-shrink-0 py-2 px-4">Добавить статью</a>
             {% endif %}
@@ -29,7 +30,7 @@
                                 class="fa fa-angle-right"></i></a>
 
                         <p>{{ object.published_at}}</p>
-                        {% if user.is_authenticated %}
+                        {% if user|has_group:'Moderator' %}
                         <a href="{% url 'blog:blog_update' object.pk %}"
                                class="btn btn-primary rounded-pill d-inline-flex flex-shrink-0 py-2 px-4 mb-2">Редактировать
                                 статью</a>
