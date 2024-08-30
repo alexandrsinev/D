@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load tags %}
 {% load static %}
 
 <head>
@@ -30,6 +31,7 @@
 
     <!-- Template Stylesheet -->
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
 
 </head>
 
@@ -148,12 +150,25 @@
             <div class="col-md-6 col-lg-6 col-xl-3">
                 <div class="footer-item d-flex flex-column">
                     <h4 class="text-white mb-4">Контактная информация</h4>
-                    <a href="#"><i class="fa fa-map-marker-alt me-2"></i> 123 Street, New York, USA</a>
+                    <p><i class="fa fa-map-marker-alt me-2"></i> 123 Street, New York, USA</p>
                     <a href="mailto:info@example.com"><i class="fas fa-envelope me-2"></i> info@example.com</a>
                     <a href="mailto:info@example.com"><i class="fas fa-envelope me-2"></i> info@example.com</a>
-                    <a href="tel:+012 345 67890"><i class="fas fa-phone me-2"></i> +012 345 67890</a>
-                    <a href="tel:+012 345 67890" class="mb-3"><i class="fas fa-print me-2"></i> +012 345 67890</a>
+                    <p><i class="fas fa-phone me-2"></i> +012 345 67890</p>
+                    <p><i class="fas fa-print me-2"></i> +012 345 67890</p>
                 </div>
+            </div>
+            <div class="col-md-6 col-lg-6 col-xl-3">
+                <h4 class="text-white mb-4">Свяжитесь с нами</h4>
+               <form method="post" action="{% url 'dentistry:base' %}" class="form">
+            {% csrf_token %}
+                   <input type="hidden" name="next" value="{{ request.path }}">
+            {{ request.feedback_form.as_p }}
+
+            <button type="submit" class="btn btn-primary rounded-pill d-inline-flex flex-shrink-0 py-1 px-2 mb-2">Отправить</button>
+                   {% if user|has_group:'Moderator' %}
+                   <a href="{% url 'dentistry:feedback_list' %}" class="btn btn-primary rounded-pill d-inline-flex flex-shrink-0 py-1 px-2 mb-2">Посмотреть сообщения</a>
+        {% endif %}
+               </form>
             </div>
         </div>
     </div>
@@ -197,18 +212,7 @@
 
 <!-- Template Javascript -->
 <script src="{% static 'js/main.js' %}"></script>
-<script>
 
-    document.addEventListener('DOMContentLoaded', function() {
-      const timeSlots = document.querySelectorAll('.time-slot');
-      timeSlots.forEach(slot => {
-        slot.addEventListener('click', function() {
-          alert('Выбран слот: ' + slot.dataset.time);
-
-        });
-      });
-    });
-  </script>
 </body>
 
 </html>
