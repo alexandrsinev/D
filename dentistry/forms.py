@@ -1,6 +1,7 @@
 from django import forms
 from django.forms import BooleanField
 
+from dentistry.models import Feedback
 from blog.models import Articles
 from dentistry.models import Doctors, Services
 
@@ -13,6 +14,12 @@ class StileFormMixin():
                 field.widget.attrs['class'] = 'form-check-input'
             else:
                 field.widget.attrs['class'] = 'form-control'
+
+
+class FeedbackForm(StileFormMixin, forms.ModelForm):
+    class Meta:
+        model = Feedback
+        fields = ['name', 'phone', 'message']
 
 
 class DoctorsModeratorForm(StileFormMixin, forms.ModelForm):
