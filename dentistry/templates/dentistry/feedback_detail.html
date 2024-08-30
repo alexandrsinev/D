@@ -1,0 +1,26 @@
+
+{% extends 'dentistry/base.html' %}
+{% load static %}
+{% block content %}
+
+            <div class="container py-5">
+                <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 1600px;">
+
+                    <h4 class="text-uppercase text-primary">Имя: {{ object.name }}</h4>
+                    <h5 class="text-uppercase text-primary">Телефон: {{ object.phone }}</h5>
+                </div>
+                <div class="row g-4 justify-content-center">
+                    <div class="col-lg-6 col-xl-10 wow fadeInUp" data-wow-delay="0.2s">
+                        <div class="blog-item">
+
+                            <div class="blog-content rounded-bottom p-4">
+
+                                <p>{{ object.message }}</p>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}

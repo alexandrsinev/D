@@ -26,6 +26,9 @@ def create_appointment(request, doctor_id):
             return redirect('dentistry:services')
     else:
         initial_data = {'doctor': doctor}
+        if request.user.is_authenticated:
+            initial_data['name'] = request.user.first_name + ' ' + request.user.last_name
+            initial_data['phone'] = request.user.phone
         form = AppointmentForm(initial=initial_data)
     return render(request, 'appointment/create_appointment.html', {'form': form})
 

@@ -1,6 +1,7 @@
 from django.db import models
 
 from dentistry.models import Doctors
+from users.models import Users
 
 NULLABLE = {'blank': True, 'null': True}
 
@@ -11,6 +12,7 @@ class Appointment(models.Model):
     doctor = models.ForeignKey(Doctors, on_delete=models.CASCADE)
     date = models.DateField(**NULLABLE)
     time = models.TimeField(**NULLABLE)
+    user = models.ForeignKey(Users, on_delete=models.CASCADE, **NULLABLE)
 
     def __str__(self):
         return f"{self.name} - {self.doctor} - {self.date} {self.time}"

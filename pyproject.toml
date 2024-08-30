@@ -13,6 +13,7 @@ python-dotenv = "^1.0.1"
 psycopg2-binary = "^2.9.9"
 ipython = "^8.26.0"
 redis = "^5.0.8"
+docker = "^7.1.0"
 
 
 [build-system]

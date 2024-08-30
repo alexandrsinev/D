@@ -1,0 +1,31 @@
+{% extends 'dentistry/base.html' %}
+
+{% block content %}
+<div class="mt-5">
+<div class="col-12 mb-5 text-center">
+    <form class="row d-flex justify-content-center" method="post" enctype="multipart/form-data">
+
+        <div class="col-6 mb-5 text-center">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">
+                        Регистрация
+                    </h4>
+                </div>
+                <div class="card-body">
+                    {% csrf_token %}
+                    {{ form.as_p}}
+                    <button type="submit" class="btn btn-primary">
+                        Регистрация
+                    </button>
+
+                </div>
+            </div>
+        </div>
+
+
+
+    </form>
+</div>
+    </div>
+{% endblock %}

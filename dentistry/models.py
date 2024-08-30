@@ -28,3 +28,13 @@ class Doctors(models.Model):
     class Meta:
         verbose_name = 'Врач'
         verbose_name_plural = 'Врачи'
+
+
+class Feedback(models.Model):
+    name = models.CharField(max_length=100, verbose_name='Имя')
+    phone = models.CharField(max_length=40, verbose_name='телефон')
+    message = models.TextField(verbose_name='Сообщение')
+    create_at = models.DateTimeField(verbose_name='Дата отправки сообщения', auto_now=True)
+
+    def __str__(self):
+        return self.name
