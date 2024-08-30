@@ -1,0 +1,33 @@
+{% extends 'dentistry/base.html' %}
+{% load static %}
+{% block content %}
+
+
+<!-- Blog Start -->
+<div class="container-fluid blog py-5">
+    <div class="container py-5">
+        <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
+            <h4 class="text-uppercase text-primary">Обратная связь от пациентов</h4>
+        </div>
+        <div class="row g-4 justify-content-center">
+            {% for object in object_list %}
+            <div class="col-lg-6 col-xl-4 wow fadeInUp" data-wow-delay="0.2s">
+                <div class="blog-item">
+
+                    <div class="blog-content rounded-bottom p-4">
+                        <p class="h4 d-inline-block mb-3">{{object.name }}</p>
+                        <p>{{object.message | slice:100 }}</p>
+                        <a href="{% url 'dentistry:feedback_detail' object.id %}" class="fw-bold text-secondary">Читать <i
+                                class="fa fa-angle-right"></i></a>
+
+                        <p>{{ object.create_at}}</p>
+
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<!-- Blog End -->
+{% endblock %}
