@@ -1,21 +1,31 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.views import View
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, FormView
 
-from dentistry.forms import DoctorsModeratorForm, ServicesModeratorForm
-from dentistry.models import Doctors, Services
+from config import settings
+from dentistry.forms import DoctorsModeratorForm, ServicesModeratorForm, FeedbackForm
+from dentistry.models import Doctors, Services, Feedback
 
 
 class IndexView(View):
     model = Doctors
 
     def get(self, request):
-        return render(request, 'dentistry/base.html')
+        form = FeedbackForm()
+        return render(request, 'dentistry/base.html', {'form': form})
+
+    def post(self, request):
+        form = FeedbackForm(request.POST)
+        if form.is_valid():
+            form.save()
+            next_url = request.POST.get('next', '/')
+            return redirect(next_url)
+        else:
+            return render(request, 'dentistry/index.html', {'form': form})
 
 
 class AboutView(View):
-    model = Doctors
 
     def get(self, request):
         return render(request, 'dentistry/about.html')
@@ -104,7 +114,6 @@ class DoctorCreateView(CreateView):
         return reverse('dentistry:doctors_list', kwargs={'specialization_id': specialization_id})
 
 
-
 # Контроллер для редактирования врача
 class DoctorUpdateView(UpdateView):
     model = Doctors
@@ -132,3 +141,22 @@ class DoctorDeleteView(DeleteView):
     def get_success_url(self):
         specialization_id = self.kwargs['specialization_id']
         return reverse('dentistry:doctors_list', kwargs={'specialization_id': specialization_id})
+
+
+class FeedbackListView(ListView):
+    model = Feedback
+
+
+class FeedbackDetailView(DetailView):
+    model = Feedback
+
+
+class ContactsView(View):
+
+    def get(self, request):
+        return render(request, 'dentistry/contact.html')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['YANDEX_MAPS_API_KEY'] = settings.YANDEX_MAPS_API_KEY
+        return context
